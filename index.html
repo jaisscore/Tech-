@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechVerse — Engineering the Next Substrate of Intelligence</title>
+<meta name="description" content="TechVerse fuses artificial cognition, orbital infrastructure, quantum computing, robotics and cybersecurity into a single operating layer for the century ahead.">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>◈</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Backdrop canvas for ambient constellation field -->
+<canvas id="field-canvas"></canvas>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#top" class="nav__logo">
+      <span class="nav__logo-mark">◈</span>
+      <span>TechVerse</span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="#ai">Cognition</a>
+      <a href="#space">Orbital</a>
+      <a href="#quantum">Quantum</a>
+      <a href="#robotics">Motion</a>
+      <a href="#cyber">Aegis</a>
+      <a href="#timeline">Roadmap</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+      </button>
+      <a href="#contact" class="btn btn--ghost nav__cta">Transmit</a>
+      <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero__inner">
+      <p class="eyebrow" data-reveal>
+        <span class="eyebrow__dot"></span> Transmission online — Est. 2035
+      </p>
+      <h1 class="hero__title" data-reveal>
+        Engineering the next<br>
+        <span class="hero__title-grad">substrate of intelligence</span>
+      </h1>
+      <p class="hero__sub" data-reveal>
+        TechVerse fuses artificial cognition, orbital infrastructure, quantum
+        computation and autonomous defense into one operating layer built
+        for the century ahead.
+      </p>
+      <div class="hero__cta-row" data-reveal>
+        <a href="#contact" class="btn btn--primary">Enter the Grid</a>
+        <a href="#timeline" class="btn btn--outline">View Manifesto</a>
+      </div>
+    </div>
+
+    <div class="readout" data-reveal aria-label="Live network statistics">
+      <div class="readout__item">
+        <span class="readout__value" data-counter data-target="14.2" data-decimals="1" data-suffix="M">0</span>
+        <span class="readout__label">Neural nodes synced</span>
+      </div>
+      <div class="readout__item">
+        <span class="readout__value" data-counter data-target="342" data-suffix="">0</span>
+        <span class="readout__label">Orbital relays active</span>
+      </div>
+      <div class="readout__item">
+        <span class="readout__value" data-counter data-target="99.998" data-decimals="3" data-suffix="%">0</span>
+        <span class="readout__label">Mesh uptime</span>
+      </div>
+      <div class="readout__item">
+        <span class="readout__value" data-counter data-target="0.4" data-decimals="1" data-suffix="ns">0</span>
+        <span class="readout__label">Quantum latency</span>
+      </div>
+    </div>
+
+    <a href="#ai" class="scroll-cue" aria-label="Scroll to content"><span></span></a>
+  </section>
+
+  <!-- ===================== DIVISIONS INTRO ===================== -->
+  <section class="section section--intro">
+    <p class="section__eyebrow" data-reveal>The five divisions</p>
+    <h2 class="section__title" data-reveal>One grid. Five disciplines. Zero downtime.</h2>
+    <p class="section__desc" data-reveal>
+      Every TechVerse system is built and maintained by a dedicated division,
+      each shipping independently, all synchronized through a shared
+      cognition layer.
+    </p>
+  </section>
+
+  <!-- ===================== AI ===================== -->
+  <section class="division" id="ai">
+    <div class="division__media" data-reveal aria-hidden="true">
+      <div class="hud-frame">
+        <svg viewBox="0 0 200 200" class="hud-icon">
+          <circle cx="100" cy="40" r="10" stroke="currentColor" fill="none" stroke-width="2"/>
+          <circle cx="50" cy="110" r="10" stroke="currentColor" fill="none" stroke-width="2"/>
+          <circle cx="150" cy="110" r="10" stroke="currentColor" fill="none" stroke-width="2"/>
+          <circle cx="100" cy="170" r="10" stroke="currentColor" fill="none" stroke-width="2"/>
+          <path d="M100 50 L50 100 M100 50 L150 100 M50 120 L100 160 M150 120 L100 160 M60 110 L140 110" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+        </svg>
+      </div>
+    </div>
+    <div class="division__content" data-reveal>
+      <span class="division__tag">01 · Cognition Division</span>
+      <h3 class="division__title">Reasoning that sees, reads and acts.</h3>
+      <p class="division__desc">
+        Multi-modal cognition cores process text, vision and live sensor
+        streams in a single reasoning pass, deployed everywhere from
+        research labs to orbital control rooms.
+      </p>
+      <ul class="division__list">
+        <li>Adaptive reasoning cores</li>
+        <li>Autonomous research agents</li>
+        <li>Cross-modal perception</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== SPACE ===================== -->
+  <section class="division division--reverse" id="space">
+    <div class="division__media" data-reveal aria-hidden="true">
+      <div class="hud-frame">
+        <svg viewBox="0 0 200 200" class="hud-icon">
+          <circle cx="100" cy="100" r="34" stroke="currentColor" fill="none" stroke-width="2"/>
+          <ellipse cx="100" cy="100" rx="80" ry="26" stroke="currentColor" fill="none" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="180" cy="100" r="4" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+    <div class="division__content" data-reveal>
+      <span class="division__tag">02 · Orbital Division</span>
+      <h3 class="division__title">Infrastructure beyond the atmosphere.</h3>
+      <p class="division__desc">
+        A self-healing satellite mesh and reusable launch fleet extend
+        human infrastructure past low earth orbit, keeping the grid live
+        from the ground to the lunar corridor.
+      </p>
+      <ul class="division__list">
+        <li>Reusable heavy-lift fleet</li>
+        <li>Autonomous orbital relays</li>
+        <li>Lunar supply corridors</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== QUANTUM ===================== -->
+  <section class="division" id="quantum">
+    <div class="division__media" data-reveal aria-hidden="true">
+      <div class="hud-frame">
+        <svg viewBox="0 0 200 200" class="hud-icon">
+          <circle cx="100" cy="100" r="6" fill="currentColor"/>
+          <ellipse cx="100" cy="100" rx="70" ry="26" stroke="currentColor" fill="none" stroke-width="1.6"/>
+          <ellipse cx="100" cy="100" rx="70" ry="26" stroke="currentColor" fill="none" stroke-width="1.6" transform="rotate(60 100 100)"/>
+          <ellipse cx="100" cy="100" rx="70" ry="26" stroke="currentColor" fill="none" stroke-width="1.6" transform="rotate(120 100 100)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="division__content" data-reveal>
+      <span class="division__tag">03 · Quantum Division</span>
+      <h3 class="division__title">Fault-tolerant compute at scale.</h3>
+      <p class="division__desc">
+        Fault-tolerant qubit lattices solve optimization and simulation
+        problems classical silicon will never touch, shielded for
+        stability at room temperature.
+      </p>
+      <ul class="division__list">
+        <li>1,000+ logical qubits</li>
+        <li>Room-temp coherence shielding</li>
+        <li>Cryptographic-grade simulation</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== ROBOTICS ===================== -->
+  <section class="division division--reverse" id="robotics">
+    <div class="division__media" data-reveal aria-hidden="true">
+      <div class="hud-frame">
+        <svg viewBox="0 0 200 200" class="hud-icon">
+          <rect x="70" y="30" width="60" height="34" rx="6" stroke="currentColor" fill="none" stroke-width="2"/>
+          <line x1="100" y1="64" x2="100" y2="110" stroke="currentColor" stroke-width="2"/>
+          <line x1="100" y1="110" x2="60" y2="150" stroke="currentColor" stroke-width="2"/>
+          <line x1="100" y1="110" x2="140" y2="150" stroke="currentColor" stroke-width="2"/>
+          <circle cx="85" cy="45" r="4" fill="currentColor"/>
+          <circle cx="115" cy="45" r="4" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+    <div class="division__content" data-reveal>
+      <span class="division__tag">04 · Motion Division</span>
+      <h3 class="division__title">Actuated systems for hostile terrain.</h3>
+      <p class="division__desc">
+        Swarm-coordinated robotics built for factories, disaster zones and
+        ground no human should stand on, engineered to repair themselves
+        mid-mission.
+      </p>
+      <ul class="division__list">
+        <li>Swarm-coordinated units</li>
+        <li>Self-repairing actuators</li>
+        <li>Terrain-adaptive locomotion</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== CYBER ===================== -->
+  <section class="division" id="cyber">
+    <div class="division__media" data-reveal aria-hidden="true">
+      <div class="hud-frame">
+        <svg viewBox="0 0 200 200" class="hud-icon">
+          <path d="M100 30 L155 52 V102 C155 138 132 162 100 174 C68 162 45 138 45 102 V52 Z" stroke="currentColor" fill="none" stroke-width="2"/>
+          <circle cx="100" cy="98" r="14" stroke="currentColor" fill="none" stroke-width="2"/>
+          <line x1="100" y1="112" x2="100" y2="130" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+    <div class="division__content" data-reveal>
+      <span class="division__tag">05 · Aegis Division</span>
+      <h3 class="division__title">Post-quantum defense, always on.</h3>
+      <p class="division__desc">
+        Post-quantum encryption and autonomous threat response guard every
+        layer of the grid, from orbital relays to the smallest edge
+        sensor.
+      </p>
+      <ul class="division__list">
+        <li>Post-quantum encryption</li>
+        <li>Autonomous intrusion response</li>
+        <li>Zero-trust mesh architecture</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== TIMELINE ===================== -->
+  <section class="section timeline-section" id="timeline">
+    <p class="section__eyebrow" data-reveal>Flight path</p>
+    <h2 class="section__title" data-reveal>Roadmap to full deployment</h2>
+
+    <div class="timeline">
+      <div class="timeline__line" aria-hidden="true"></div>
+
+      <div class="timeline__item" data-reveal>
+        <div class="timeline__node"></div>
+        <span class="timeline__year">2035</span>
+        <h3 class="timeline__title">Grid ignition</h3>
+        <p class="timeline__desc">The global cognition mesh goes live across 40 countries simultaneously.</p>
+      </div>
+
+      <div class="timeline__item" data-reveal>
+        <div class="timeline__node"></div>
+        <span class="timeline__year">2037</span>
+        <h3 class="timeline__title">Lunar corridor</h3>
+        <p class="timeline__desc">First permanent orbital-to-lunar supply line reaches full operational status.</p>
+      </div>
+
+      <div class="timeline__item" data-reveal>
+        <div class="timeline__node"></div>
+        <span class="timeline__year">2039</span>
+        <h3 class="timeline__title">Logical qubit milestone</h3>
+        <p class="timeline__desc">TechVerse Quantum crosses 1,000 stable logical qubits in production.</p>
+      </div>
+
+      <div class="timeline__item" data-reveal>
+        <div class="timeline__node"></div>
+        <span class="timeline__year">2041</span>
+        <h3 class="timeline__title">Autonomous motion fleet</h3>
+        <p class="timeline__desc">Robotics swarms are deployed across 12 disaster-response zones worldwide.</p>
+      </div>
+
+      <div class="timeline__item" data-reveal>
+        <div class="timeline__node"></div>
+        <span class="timeline__year">2043</span>
+        <h3 class="timeline__title">Full mesh encryption</h3>
+        <p class="timeline__desc">Post-quantum security becomes the adopted global standard for critical infrastructure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section faq-section" id="faq">
+    <p class="section__eyebrow" data-reveal>Questions</p>
+    <h2 class="section__title" data-reveal>Frequently asked</h2>
+
+    <div class="faq-list" data-reveal>
+      <div class="faq-item">
+        <button class="faq-item__q">
+          <span>What does TechVerse actually build?</span>
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Five product divisions — cognition systems, orbital infrastructure, quantum compute, robotics and autonomous cybersecurity — unified under one shared operating mesh.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q">
+          <span>Is the platform secure against quantum decryption?</span>
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes. Every layer of the grid runs on post-quantum cryptographic standards, monitored continuously by the Aegis Division's autonomous response systems.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q">
+          <span>Can enterprises integrate with the cognition layer?</span>
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Enterprise integration is available through a dedicated onboarding track. Reach out through the contact form below and a division lead will follow up.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q">
+          <span>Do you offer developer access to orbital data feeds?</span>
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Selected orbital telemetry feeds are opened to research partners on a rolling basis. Include your use case in the message field when you contact us.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q">
+          <span>How do I get involved with TechVerse?</span>
+          <span class="faq-item__icon">+</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Start with the transmission form below. Tell us which division interests you most and someone from that team will respond directly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="section contact-section" id="contact">
+    <div class="contact-card" data-reveal>
+      <div class="contact-card__intro">
+        <p class="section__eyebrow">Open a channel</p>
+        <h2 class="section__title">Transmit a message</h2>
+        <p class="section__desc">
+          Tell us which division you're reaching out to. A human — not an
+          agent — reads every message.
+        </p>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Ada Lovelace" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="ada@grid.tech" required>
+        </div>
+        <div class="form-row">
+          <label for="division">Division</label>
+          <select id="division" name="division">
+            <option>Cognition</option>
+            <option>Orbital</option>
+            <option>Quantum</option>
+            <option>Motion</option>
+            <option>Aegis</option>
+            <option>General inquiry</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="What are you building?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary contact-form__submit">
+          <span class="btn__label">Send transmission</span>
+        </button>
+        <p class="contact-form__status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <a href="#top" class="nav__logo">
+        <span class="nav__logo-mark">◈</span>
+        <span>TechVerse</span>
+      </a>
+      <p>Building the operating layer for the century ahead.</p>
+    </div>
+
+    <div class="footer__col">
+      <h4>Divisions</h4>
+      <a href="#ai">Cognition</a>
+      <a href="#space">Orbital</a>
+      <a href="#quantum">Quantum</a>
+      <a href="#robotics">Motion</a>
+      <a href="#cyber">Aegis</a>
+    </div>
+
+    <div class="footer__col">
+      <h4>Company</h4>
+      <a href="#timeline">Roadmap</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer__col">
+      <h4>Connect</h4>
+      <div class="footer__socials">
+        <a href="#" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20Z"/></svg>
+        </a>
+        <a href="#" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.28.1-2.66 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.66.64.7 1.03 1.6 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <span>© 2035 TechVerse Collective. All signals reserved.</span>
+    <span class="mono">Built for GitHub Pages · v2.35.0</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
