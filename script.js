@@ -313,19 +313,31 @@ function initStarfield() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight * 1.2;
     const count = Math.floor((width * height) / 6000);
-    stars = Array.from({ length: count }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      r: Math.random() * 1.1 + 0.2,
-      twinkle: Math.random() * Math.PI * 2,
-      speed: Math.random() * 0.015 + 0.005
-    }));
+    stars = Array.from({ length: count }, () => {
+      const depth = Math.random() * 0.8 + 0.2; // 0.2 (far) – 1 (near)
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: depth * 1.1 + 0.2,
+        depth,
+        twinkle: Math.random() * Math.PI * 2,
+        speed: Math.random() * 0.015 + 0.005
+      };
+    });
     draw(0);
   }
 
   function draw(time) {
     ctx.clearRect(0, 0, width, height);
     stars.forEach(s => {
+      if (!reduceMotion) {
+        // Nearer stars drift very slightly faster — a subtle sense of
+        // gliding forward through the field, never fast enough to distract.
+        s.x -= s.depth * 0.045;
+        s.y += s.depth * 0.018;
+        if (s.x < -2) s.x = width + 2;
+        if (s.y > height + 2) s.y = -2;
+      }
       const flicker = reduceMotion ? 0.7 : 0.5 + Math.sin(s.twinkle + time * s.speed) * 0.5;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
@@ -449,14 +461,21 @@ function initTypewriter() {
     })();
   }
 
-  // Wait for the loader/entrance to clear before typing starts
-  setTimeout(() => {
+  // Start typing exactly when the loader clears, so the reveal and the
+  // typing motion always land together regardless of load speed.
+  const start = () => {
     typeLine(text1, line1, () => {
       typeLine(text2, line2, () => {
         if (caret) caret.classList.add('is-done');
       });
     });
-  }, 700);
+  };
+
+  if (document.body.classList.contains('is-loaded')) {
+    start();
+  } else {
+    document.addEventListener('techverse:loaded', start, { once: true });
+  }
 }
 
 /* ---------------------------------------------------------
@@ -467,6 +486,7 @@ function initLoader() {
   const loader = document.getElementById('loader');
   if (!loader) {
     document.body.classList.add('is-loaded');
+    document.dispatchEvent(new CustomEvent('techverse:loaded'));
     return;
   }
 
@@ -476,6 +496,7 @@ function initLoader() {
     loader.classList.add('is-hidden');
     document.body.classList.remove('is-loading');
     document.body.classList.add('is-loaded');
+    document.dispatchEvent(new CustomEvent('techverse:loaded'));
   };
 
   // Give the fonts/particle canvases a brief moment to settle,
