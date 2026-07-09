@@ -12,7 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initFAQ();
   initContactForm();
   initParticleField();
+  initStarfield();
   initNavShrink();
+  initFloaters();
+  initTilt();
+  initTypewriter();
+  initLoader();
 });
 
 /* ---------------------------------------------------------
@@ -177,9 +182,13 @@ function initFAQ() {
 function initContactForm() {
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
+  const success = document.getElementById('formSuccess');
+  const successText = document.getElementById('formSuccessText');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    success.classList.remove('is-visible');
 
     const name = form.name.value.trim();
     const email = form.email.value.trim();
@@ -197,16 +206,20 @@ function initContactForm() {
       return;
     }
 
+    status.textContent = '';
     const submitBtn = form.querySelector('.contact-form__submit');
     submitBtn.disabled = true;
     submitBtn.querySelector('.btn__label').textContent = 'Transmitting…';
 
     setTimeout(() => {
-      status.style.color = '';
-      status.textContent = `Signal received, ${name.split(' ')[0]}. The ${form.division.value} division will respond shortly.`;
       submitBtn.querySelector('.btn__label').textContent = 'Send transmission';
       submitBtn.disabled = false;
+
+      successText.textContent = `Signal received, ${name.split(' ')[0]}. The ${form.division.value} division will respond shortly.`;
+      success.classList.add('is-visible');
       form.reset();
+
+      setTimeout(() => success.classList.remove('is-visible'), 6000);
     }, 900);
   });
 }
@@ -283,4 +296,198 @@ function initParticleField() {
   } else {
     requestAnimationFrame(step);
   }
+}
+
+/* ---------------------------------------------------------
+   Parallax star-field — a slow, deep backdrop layer that
+   drifts opposite scroll direction for a sense of depth.
+--------------------------------------------------------- */
+function initStarfield() {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let width, height, stars;
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight * 1.2;
+    const count = Math.floor((width * height) / 6000);
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.1 + 0.2,
+      twinkle: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.015 + 0.005
+    }));
+    draw(0);
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, width, height);
+    stars.forEach(s => {
+      const flicker = reduceMotion ? 0.7 : 0.5 + Math.sin(s.twinkle + time * s.speed) * 0.5;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(230, 235, 255, ${0.15 + flicker * 0.55})`;
+      ctx.fill();
+    });
+  }
+
+  function loop(time) {
+    draw(time * 0.05);
+    if (!reduceMotion) requestAnimationFrame(loop);
+  }
+
+  function onScroll() {
+    // Star layer moves slower than the page for a parallax depth cue
+    const offset = window.scrollY * 0.12;
+    canvas.style.transform = `translateY(${-offset}px)`;
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  if (reduceMotion) {
+    draw(0);
+  } else {
+    requestAnimationFrame(loop);
+  }
+}
+
+/* ---------------------------------------------------------
+   Floating ambient particles — lightweight CSS-driven embers
+   that drift upward through the hero section.
+--------------------------------------------------------- */
+function initFloaters() {
+  const container = document.getElementById('heroFloaters');
+  if (!container) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  const count = window.innerWidth < 720 ? 10 : 18;
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('span');
+    el.className = 'floater';
+    el.style.left = `${Math.random() * 100}%`;
+    el.style.setProperty('--fs', `${(Math.random() * 3 + 2).toFixed(1)}px`);
+    el.style.setProperty('--fdur', `${(Math.random() * 10 + 10).toFixed(1)}s`);
+    el.style.setProperty('--fdelay', `${(Math.random() * 12).toFixed(1)}s`);
+    el.style.setProperty('--fx', `${Math.round(Math.random() * 80 - 40)}px`);
+    container.appendChild(el);
+  }
+}
+
+/* ---------------------------------------------------------
+   Subtle 3D tilt on feature cards (division HUD frames and
+   future-project cards). Pointer-fine devices only.
+--------------------------------------------------------- */
+function initTilt() {
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!canHover || reduceMotion) return;
+
+  const targets = document.querySelectorAll('.hud-frame, .future-card');
+
+  targets.forEach(el => {
+    el.classList.add('tilt-target');
+
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      el.style.setProperty('--tilt-y', `${px * 10}deg`);
+      el.style.setProperty('--tilt-x', `${py * -10}deg`);
+    });
+
+    el.addEventListener('mouseleave', () => {
+      el.style.setProperty('--tilt-x', '0deg');
+      el.style.setProperty('--tilt-y', '0deg');
+    });
+  });
+}
+
+/* ---------------------------------------------------------
+   Hero typewriter — types the two headline lines in sequence,
+   then leaves a blinking caret that fades after a pause.
+--------------------------------------------------------- */
+function initTypewriter() {
+  const line1 = document.getElementById('typeLine1');
+  const line2 = document.getElementById('typeLine2');
+  const caret = document.getElementById('typeCaret');
+  if (!line1 || !line2) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const text1 = line1.dataset.typeText || '';
+  const text2 = line2.dataset.typeText || '';
+
+  if (reduceMotion) {
+    line1.textContent = text1;
+    line2.textContent = text2;
+    if (caret) caret.classList.add('is-done');
+    return;
+  }
+
+  line1.textContent = '';
+  line2.textContent = '';
+
+  let i = 0;
+  const speed = 32;
+
+  function typeLine(text, el, onDone) {
+    i = 0;
+    (function tick() {
+      if (i <= text.length) {
+        el.textContent = text.slice(0, i);
+        i++;
+        setTimeout(tick, speed);
+      } else if (onDone) {
+        onDone();
+      }
+    })();
+  }
+
+  // Wait for the loader/entrance to clear before typing starts
+  setTimeout(() => {
+    typeLine(text1, line1, () => {
+      typeLine(text2, line2, () => {
+        if (caret) caret.classList.add('is-done');
+      });
+    });
+  }, 700);
+}
+
+/* ---------------------------------------------------------
+   Loading overlay — hides once the page has finished loading,
+   then reveals content with a smooth fade/slide transition.
+--------------------------------------------------------- */
+function initLoader() {
+  const loader = document.getElementById('loader');
+  if (!loader) {
+    document.body.classList.add('is-loaded');
+    return;
+  }
+
+  document.body.classList.add('is-loading');
+
+  const reveal = () => {
+    loader.classList.add('is-hidden');
+    document.body.classList.remove('is-loading');
+    document.body.classList.add('is-loaded');
+  };
+
+  // Give the fonts/particle canvases a brief moment to settle,
+  // but never block the page for more than ~1.6s.
+  const minDelay = new Promise(resolve => setTimeout(resolve, 900));
+  const pageLoad = new Promise(resolve => {
+    if (document.readyState === 'complete') resolve();
+    else window.addEventListener('load', resolve, { once: true });
+  });
+
+  Promise.race([
+    Promise.all([minDelay, pageLoad]),
+    new Promise(resolve => setTimeout(resolve, 1600))
+  ]).then(reveal);
 }

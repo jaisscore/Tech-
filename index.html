@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TechVerse — Engineering the Next Substrate of Intelligence</title>
-<meta name="description" content="TechVerse fuses artificial cognition, orbital infrastructure, quantum computing, robotics and cybersecurity into a single operating layer for the century ahead.">
+<meta name="description" content="TechVerse builds space technology, artificial intelligence, advanced engineering and long-term Dyson Sphere research to contribute to humanity's long-term future.">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>◈</text></svg>">
 
@@ -13,10 +13,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
+<noscript><style>
+  .loader { display: none !important; }
+  main, .nav, .footer { opacity: 1 !important; transform: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+</style></noscript>
 </head>
 <body>
 
-<!-- Backdrop canvas for ambient constellation field -->
+<!-- ===================== LOADER ===================== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">◈</div>
+  <div class="loader__bar"><span></span></div>
+  <p class="loader__label mono">Initializing grid…</p>
+</div>
+
+<!-- Backdrop canvases for ambient star-field + constellation -->
+<canvas id="stars-canvas"></canvas>
 <canvas id="field-canvas"></canvas>
 
 <!-- ===================== NAV ===================== -->
@@ -28,11 +41,13 @@
     </a>
 
     <nav class="nav__links" id="navLinks">
+      <a href="#vision">Vision</a>
       <a href="#ai">Cognition</a>
       <a href="#space">Orbital</a>
       <a href="#quantum">Quantum</a>
       <a href="#robotics">Motion</a>
       <a href="#cyber">Aegis</a>
+      <a href="#future">Future</a>
       <a href="#timeline">Roadmap</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -59,8 +74,8 @@
         <span class="eyebrow__dot"></span> Transmission online — Est. 2035
       </p>
       <h1 class="hero__title" data-reveal>
-        Engineering the next<br>
-        <span class="hero__title-grad">substrate of intelligence</span>
+        <span class="hero__title-line" id="typeLine1" data-type-text="Engineering the next"></span><br>
+        <span class="hero__title-grad hero__title-line" id="typeLine2" data-type-text="substrate of intelligence"></span><span class="hero__caret" id="typeCaret" aria-hidden="true"></span>
       </h1>
       <p class="hero__sub" data-reveal>
         TechVerse fuses artificial cognition, orbital infrastructure, quantum
@@ -92,7 +107,48 @@
       </div>
     </div>
 
+    <div class="floaters" id="heroFloaters" aria-hidden="true"></div>
+
     <a href="#ai" class="scroll-cue" aria-label="Scroll to content"><span></span></a>
+  </section>
+
+  <!-- ===================== STATUS STRIP ===================== -->
+  <section class="status-strip" data-reveal>
+    <span class="status-strip__dot"></span>
+    <span class="status-strip__label mono">Current status</span>
+    <span class="status-strip__divider" aria-hidden="true"></span>
+    <span class="status-strip__text">TechVerse is currently in development. More updates coming soon.</span>
+  </section>
+
+  <!-- ===================== VISION & MISSION ===================== -->
+  <section class="section manifesto" id="vision">
+    <p class="section__eyebrow" data-reveal>Why we exist</p>
+    <h2 class="section__title" data-reveal>Vision &amp; mission</h2>
+
+    <div class="manifesto__grid">
+      <div class="manifesto__card" data-reveal>
+        <div class="manifesto__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3.2"/></svg>
+        </div>
+        <span class="manifesto__tag">Vision</span>
+        <p class="manifesto__text">
+          To contribute to humanity's long-term future through space
+          technology, artificial intelligence, advanced engineering, and
+          the long-term goal of Dyson Sphere technology.
+        </p>
+      </div>
+
+      <div class="manifesto__card" data-reveal>
+        <div class="manifesto__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5Z"/><path d="M8.5 12.5l2.3 2.3L15.5 10"/></svg>
+        </div>
+        <span class="manifesto__tag">Mission</span>
+        <p class="manifesto__text">
+          Build technologies that improve humanity every day through
+          innovation, research, and engineering excellence.
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- ===================== DIVISIONS INTRO ===================== -->
@@ -247,6 +303,67 @@
     </div>
   </section>
 
+  <!-- ===================== FUTURE PROJECTS ===================== -->
+  <section class="section future-section" id="future">
+    <p class="section__eyebrow" data-reveal>What's next</p>
+    <h2 class="section__title" data-reveal>Future projects</h2>
+    <p class="section__desc" data-reveal>
+      The frontiers TechVerse is researching and building toward, beyond
+      the five active divisions above.
+    </p>
+
+    <div class="future-grid">
+      <div class="future-card" data-reveal>
+        <div class="future-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5Z"/></svg>
+        </div>
+        <h3 class="future-card__title">Space Infrastructure</h3>
+      </div>
+
+      <div class="future-card" data-reveal>
+        <div class="future-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.5"/><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+        </div>
+        <h3 class="future-card__title">Dyson Sphere Research &amp; Concepts</h3>
+      </div>
+
+      <div class="future-card" data-reveal>
+        <div class="future-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="6" r="2.4"/><circle cx="6" cy="16" r="2.4"/><circle cx="18" cy="16" r="2.4"/><path d="M12 8.4 6 13.8M12 8.4l6 5.4M8 16.5h8" opacity="0.6"/></svg>
+        </div>
+        <h3 class="future-card__title">Artificial Intelligence</h3>
+      </div>
+
+      <div class="future-card" data-reveal>
+        <div class="future-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="3" width="10" height="6" rx="1.5"/><path d="M12 9v4M8 13h8v6a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-6Z"/></svg>
+        </div>
+        <h3 class="future-card__title">Advanced Robotics</h3>
+      </div>
+
+      <div class="future-card" data-reveal>
+        <div class="future-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(120 12 12)"/></svg>
+        </div>
+        <h3 class="future-card__title">Quantum Computing</h3>
+      </div>
+
+      <div class="future-card" data-reveal>
+        <div class="future-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="future-card__title">Sustainable Energy Systems</h3>
+      </div>
+
+      <div class="future-card" data-reveal>
+        <div class="future-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20c6-1 10-5 11-11" /><circle cx="17" cy="7" r="3.2"/><path d="M9 15l-3 5 5-3" opacity="0.7"/></svg>
+        </div>
+        <h3 class="future-card__title">Deep Space Technologies</h3>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== TIMELINE ===================== -->
   <section class="section timeline-section" id="timeline">
     <p class="section__eyebrow" data-reveal>Flight path</p>
@@ -355,11 +472,59 @@
     <div class="contact-card" data-reveal>
       <div class="contact-card__intro">
         <p class="section__eyebrow">Open a channel</p>
-        <h2 class="section__title">Transmit a message</h2>
+        <h2 class="section__title">Connect with TechVerse</h2>
         <p class="section__desc">
           Tell us which division you're reaching out to. A human — not an
           agent — reads every message.
         </p>
+
+        <ul class="connect-grid">
+          <li class="connect-item">
+            <span class="connect-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+            </span>
+            <span class="connect-item__meta">
+              <span class="connect-item__label mono">Email</span>
+              <span class="connect-item__value">hello@techverse.dev</span>
+            </span>
+          </li>
+          <li class="connect-item">
+            <span class="connect-item__icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.28.1-2.66 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.66.64.7 1.03 1.6 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+            </span>
+            <span class="connect-item__meta">
+              <span class="connect-item__label mono">GitHub</span>
+              <span class="connect-item__value">github.com/techverse</span>
+            </span>
+          </li>
+          <li class="connect-item">
+            <span class="connect-item__icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg>
+            </span>
+            <span class="connect-item__meta">
+              <span class="connect-item__label mono">LinkedIn</span>
+              <span class="connect-item__value">linkedin.com/company/techverse</span>
+            </span>
+          </li>
+          <li class="connect-item">
+            <span class="connect-item__icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20Z"/></svg>
+            </span>
+            <span class="connect-item__meta">
+              <span class="connect-item__label mono">X</span>
+              <span class="connect-item__value">@techverse</span>
+            </span>
+          </li>
+          <li class="connect-item">
+            <span class="connect-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span class="connect-item__meta">
+              <span class="connect-item__label mono">Instagram</span>
+              <span class="connect-item__value">@techverse.tech</span>
+            </span>
+          </li>
+        </ul>
       </div>
 
       <form class="contact-form" id="contactForm" novalidate>
@@ -390,6 +555,13 @@
           <span class="btn__label">Send transmission</span>
         </button>
         <p class="contact-form__status" id="formStatus" role="status" aria-live="polite"></p>
+
+        <div class="contact-form__success" id="formSuccess" role="status" aria-live="polite">
+          <span class="contact-form__success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+          </span>
+          <span class="contact-form__success-text" id="formSuccessText"></span>
+        </div>
       </form>
     </div>
   </section>
@@ -418,6 +590,8 @@
 
     <div class="footer__col">
       <h4>Company</h4>
+      <a href="#vision">Vision</a>
+      <a href="#future">Future projects</a>
       <a href="#timeline">Roadmap</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
@@ -426,14 +600,20 @@
     <div class="footer__col">
       <h4>Connect</h4>
       <div class="footer__socials">
-        <a href="#" aria-label="X / Twitter">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20Z"/></svg>
+        <a href="mailto:hello@techverse.dev" aria-label="Email">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
         </a>
         <a href="#" aria-label="GitHub">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.28.1-2.66 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.66.64.7 1.03 1.6 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
         </a>
         <a href="#" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg>
+        </a>
+        <a href="#" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20Z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
         </a>
       </div>
     </div>

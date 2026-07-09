@@ -1,4 +1,4 @@
- # TechVerse
+# TechVerse
 
 A premium, futuristic single-page site for a 2035-era technology company —
 built with plain HTML, CSS, and JavaScript. No build step, no dependencies.
@@ -41,6 +41,16 @@ Then visit `http://localhost:8000`.
 
 No further configuration is needed — the site is a static bundle and has
 no server-side dependencies.
+
+## What's new in this update
+
+- Vision & Mission section, a 7-item Future Projects grid (including Dyson
+  Sphere research), and a "Current status" strip.
+- Loading animation, typewriter hero heading, parallax star-field,
+  floating ambient particles, 3D card tilt, and glow hover effects —
+  all disabled automatically for `prefers-reduced-motion` and touch devices.
+- Contact section renamed "Connect with TechVerse" with Email, GitHub,
+  LinkedIn, X, and Instagram channels, plus a glassmorphism success panel.
 
 ## Notes
 
