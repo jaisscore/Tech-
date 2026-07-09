@@ -1,4 +1,4 @@
-# TechVerse
+ # TechVerse
 
 A premium, futuristic single-page site for a 2035-era technology company —
 built with plain HTML, CSS, and JavaScript. No build step, no dependencies.
