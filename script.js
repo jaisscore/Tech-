@@ -479,36 +479,67 @@ function initTypewriter() {
 }
 
 /* ---------------------------------------------------------
-   Loading overlay — hides once the page has finished loading,
-   then reveals content with a smooth fade/slide transition.
+   Loading overlay — a short cinematic rocket launch sequence
+   (systems check → ignition → liftoff → exit) that then
+   reveals the site. Skippable and fully disabled for
+   prefers-reduced-motion.
 --------------------------------------------------------- */
 function initLoader() {
   const loader = document.getElementById('loader');
+  const launch = document.getElementById('launch');
+  const statusText = document.getElementById('launchStatus');
+  const skipBtn = document.getElementById('loaderSkip');
+
   if (!loader) {
     document.body.classList.add('is-loaded');
     document.dispatchEvent(new CustomEvent('techverse:loaded'));
     return;
   }
 
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let revealed = false;
+  const timers = [];
+  const schedule = (fn, delay) => timers.push(setTimeout(fn, delay));
+
   document.body.classList.add('is-loading');
 
+  const setStatus = (text) => {
+    if (!statusText) return;
+    statusText.style.opacity = '0';
+    setTimeout(() => {
+      statusText.textContent = text;
+      statusText.style.opacity = '1';
+    }, 180);
+  };
+
   const reveal = () => {
+    if (revealed) return;
+    revealed = true;
+    timers.forEach(clearTimeout);
+
     loader.classList.add('is-hidden');
     document.body.classList.remove('is-loading');
     document.body.classList.add('is-loaded');
     document.dispatchEvent(new CustomEvent('techverse:loaded'));
+
+    // Fully stop rendering/animating the loader once it's invisible.
+    setTimeout(() => { loader.style.display = 'none'; }, 750);
   };
 
-  // Give the fonts/particle canvases a brief moment to settle,
-  // but never block the page for more than ~1.6s.
-  const minDelay = new Promise(resolve => setTimeout(resolve, 900));
-  const pageLoad = new Promise(resolve => {
-    if (document.readyState === 'complete') resolve();
-    else window.addEventListener('load', resolve, { once: true });
+  skipBtn?.addEventListener('click', reveal);
+  document.addEventListener('keydown', (e) => {
+    if (!revealed && e.key === 'Escape') reveal();
   });
 
-  Promise.race([
-    Promise.all([minDelay, pageLoad]),
-    new Promise(resolve => setTimeout(resolve, 1600))
-  ]).then(reveal);
+  if (reduceMotion) {
+    // Respect the user's preference: skip straight to the site.
+    reveal();
+    return;
+  }
+
+  // Cinematic timeline — roughly 3 seconds end to end, skippable any time.
+  schedule(() => { launch.classList.add('is-ignite'); setStatus('Ignition sequence'); }, 300);
+  schedule(() => { launch.classList.remove('is-ignite'); launch.classList.add('is-liftoff'); setStatus('Liftoff'); }, 1050);
+  schedule(() => { launch.classList.add('is-exit'); setStatus('Welcome to TechVerse'); }, 2300);
+  schedule(reveal, 2950);
 }
