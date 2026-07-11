@@ -1,5 +1,5 @@
 /* =========================================================
-   TechVerse — script.js
+   FutureSwarm — script.js
    Vanilla JS only. No dependencies, no build step.
    ========================================================= */
 
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFloaters();
   initTilt();
   initTypewriter();
+  initSearch();
   initLoader();
 });
 
@@ -197,12 +198,12 @@ function initContactForm() {
 
     if (!name || !message) {
       status.textContent = 'Please fill in your name and message before transmitting.';
-      status.style.color = '#f87171';
+      status.style.color = '#c9776a';
       return;
     }
     if (!emailPattern.test(email)) {
       status.textContent = 'That email address doesn\u2019t look right — double check it.';
-      status.style.color = '#f87171';
+      status.style.color = '#c9776a';
       return;
     }
 
@@ -254,8 +255,8 @@ function initParticleField() {
     ctx.clearRect(0, 0, width, height);
 
     const isLight = document.body.classList.contains('light-mode');
-    const dotColor = isLight ? '100, 110, 160' : '160, 175, 220';
-    const lineColor = isLight ? '90, 100, 200' : '124, 107, 255';
+    const dotColor = isLight ? '120, 112, 96' : '208, 200, 184';
+    const lineColor = isLight ? '140, 95, 55' : '184, 112, 63';
 
     particles.forEach(p => {
       p.x += p.vx;
@@ -341,7 +342,7 @@ function initStarfield() {
       const flicker = reduceMotion ? 0.7 : 0.5 + Math.sin(s.twinkle + time * s.speed) * 0.5;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(230, 235, 255, ${0.15 + flicker * 0.55})`;
+      ctx.fillStyle = `rgba(245, 238, 224, ${0.15 + flicker * 0.55})`;
       ctx.fill();
     });
   }
@@ -474,15 +475,24 @@ function initTypewriter() {
   if (document.body.classList.contains('is-loaded')) {
     start();
   } else {
-    document.addEventListener('techverse:loaded', start, { once: true });
+    document.addEventListener('futureswarm:loaded', start, { once: true });
   }
 }
 
 /* ---------------------------------------------------------
-   Loading overlay — a short cinematic rocket launch sequence
-   (systems check → ignition → liftoff → exit) that then
-   reveals the site. Skippable and fully disabled for
-   prefers-reduced-motion.
+   Loading overlay — a cinematic rocket launch sequence
+   (systems check → ignition → liftoff → orbit → reveal) that
+   then hands off to the site. Skippable, disabled for
+   prefers-reduced-motion, and — per the brief — only plays in
+   full on a visitor's first visit. Returning visitors (same
+   browser) get an instant, near-invisible reveal instead.
+
+   Note: "first visit only" relies on localStorage, which is
+   unavailable inside Claude.ai's in-chat preview sandbox. The
+   code below fails safe — if storage can't be read or written,
+   it simply treats every load as a first visit — and works as
+   intended the moment this file is opened directly or hosted
+   on GitHub Pages.
 --------------------------------------------------------- */
 function initLoader() {
   const loader = document.getElementById('loader');
@@ -492,9 +502,19 @@ function initLoader() {
 
   if (!loader) {
     document.body.classList.add('is-loaded');
-    document.dispatchEvent(new CustomEvent('techverse:loaded'));
+    document.dispatchEvent(new CustomEvent('futureswarm:loaded'));
     return;
   }
+
+  const STORAGE_KEY = 'futureswarm:intro-seen';
+  const hasSeenIntro = () => {
+    try { return window.localStorage.getItem(STORAGE_KEY) === '1'; }
+    catch (err) { return false; }
+  };
+  const markIntroSeen = () => {
+    try { window.localStorage.setItem(STORAGE_KEY, '1'); }
+    catch (err) { /* storage unavailable — replay next time, no harm done */ }
+  };
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let revealed = false;
@@ -520,7 +540,7 @@ function initLoader() {
     loader.classList.add('is-hidden');
     document.body.classList.remove('is-loading');
     document.body.classList.add('is-loaded');
-    document.dispatchEvent(new CustomEvent('techverse:loaded'));
+    document.dispatchEvent(new CustomEvent('futureswarm:loaded'));
 
     // Fully stop rendering/animating the loader once it's invisible.
     setTimeout(() => { loader.style.display = 'none'; }, 750);
@@ -531,15 +551,175 @@ function initLoader() {
     if (!revealed && e.key === 'Escape') reveal();
   });
 
-  if (reduceMotion) {
-    // Respect the user's preference: skip straight to the site.
+  if (reduceMotion || hasSeenIntro()) {
+    // Reduced motion, or a returning visitor: skip straight to the site.
+    markIntroSeen();
     reveal();
     return;
   }
 
-  // Cinematic timeline — roughly 3 seconds end to end, skippable any time.
-  schedule(() => { launch.classList.add('is-ignite'); setStatus('Ignition sequence'); }, 300);
-  schedule(() => { launch.classList.remove('is-ignite'); launch.classList.add('is-liftoff'); setStatus('Liftoff'); }, 1050);
-  schedule(() => { launch.classList.add('is-exit'); setStatus('Welcome to TechVerse'); }, 2300);
-  schedule(reveal, 2950);
+  markIntroSeen();
+
+  // Cinematic timeline — ~5 seconds end to end, skippable any time.
+  schedule(() => { launch.classList.add('is-ignite'); setStatus('Ignition sequence'); }, 400);
+  schedule(() => { launch.classList.remove('is-ignite'); launch.classList.add('is-liftoff'); setStatus('Liftoff'); }, 1400);
+  schedule(() => { setStatus('Approaching orbit'); }, 2900);
+  schedule(() => { launch.classList.add('is-exit'); setStatus('Welcome to FutureSwarm'); }, 4400);
+  schedule(reveal, 5000);
+}
+
+/* ---------------------------------------------------------
+   Site-wide search — a lightweight spotlight-style overlay
+   that indexes every section on the page (vision, research
+   divisions, future projects, timeline, news, publications,
+   careers, FAQ, contact). Opens via the nav button or Cmd/
+   Ctrl+K, closes on Esc or backdrop click.
+--------------------------------------------------------- */
+function initSearch() {
+  const trigger = document.getElementById('searchTrigger');
+  const overlay = document.getElementById('searchOverlay');
+  const backdrop = document.getElementById('searchBackdrop');
+  const input = document.getElementById('searchInput');
+  const closeBtn = document.getElementById('searchClose');
+  const resultsEl = document.getElementById('searchResults');
+  if (!trigger || !overlay || !input || !resultsEl) return;
+
+  const INDEX = [
+    { cat: 'Vision', title: 'Our vision', snippet: "Contributing to humanity's long-term future through space technology, AI, and Dyson Sphere-scale engineering.", id: 'vision' },
+    { cat: 'Mission', title: 'Our mission', snippet: 'Building technologies that improve humanity every day through innovation and engineering excellence.', id: 'vision' },
+    { cat: 'Research', title: 'Cognition Division — Artificial Intelligence', snippet: 'Multi-modal reasoning cores, autonomous research agents, cross-modal perception.', id: 'ai' },
+    { cat: 'Research', title: 'Orbital Division — Space Infrastructure', snippet: 'Reusable heavy-lift fleet, autonomous orbital relays, lunar supply corridors.', id: 'space' },
+    { cat: 'Research', title: 'Quantum Division — Quantum Computing', snippet: 'Logical qubits, room-temperature coherence shielding, cryptographic-grade simulation.', id: 'quantum' },
+    { cat: 'Research', title: 'Motion Division — Robotics', snippet: 'Swarm-coordinated units, self-repairing actuators, terrain-adaptive locomotion.', id: 'robotics' },
+    { cat: 'Research', title: 'Aegis Division — Cybersecurity', snippet: 'Post-quantum encryption, autonomous intrusion response, zero-trust architecture.', id: 'cyber' },
+    { cat: 'Future Projects', title: 'Dyson Sphere Research & Concepts', snippet: 'Long-term structural and energy-collection concepts for Dyson Sphere-scale engineering.', id: 'future' },
+    { cat: 'Future Projects', title: 'Sustainable Energy Systems', snippet: 'Energy infrastructure research supporting long-term, planet-scale sustainability.', id: 'future' },
+    { cat: 'Future Projects', title: 'Deep Space Technologies', snippet: 'Research frontiers beyond the five active divisions.', id: 'future' },
+    { cat: 'Roadmap', title: 'Company timeline', snippet: 'Grid ignition, lunar corridor, logical qubit milestone, autonomous motion fleet, full mesh encryption.', id: 'timeline' },
+    { cat: 'Newsroom', title: 'Latest news', snippet: 'Company announcements, engineering milestones, and press coverage.', id: 'news' },
+    { cat: 'Research', title: 'Publications', snippet: 'Technical papers and research notes from across the five divisions.', id: 'publications' },
+    { cat: 'Careers', title: 'Careers at FutureSwarm', snippet: 'Founding roles across every division — research, systems, and robotics engineering.', id: 'careers' },
+    { cat: 'Support', title: 'Frequently asked questions', snippet: 'What FutureSwarm builds, security, enterprise integration, developer access, getting involved.', id: 'faq' },
+    { cat: 'Contact', title: 'Connect with FutureSwarm', snippet: 'Email, GitHub, LinkedIn, X, and Instagram — reach the right division directly.', id: 'contact' }
+  ];
+
+  let activeIndex = -1;
+  let currentResults = [];
+
+  const escapeHtml = (str) => str.replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+
+  const render = (items) => {
+    currentResults = items;
+    activeIndex = items.length ? 0 : -1;
+
+    if (!items.length) {
+      resultsEl.innerHTML = '<p class="search-overlay__empty">No results. Try a different term.</p>';
+      return;
+    }
+
+    resultsEl.innerHTML = items.map((item, i) => `
+      <button type="button" class="search-result${i === 0 ? ' is-active' : ''}" data-target="${item.id}" data-index="${i}">
+        <span class="search-result__cat">${escapeHtml(item.cat)}</span>
+        <span class="search-result__title">${escapeHtml(item.title)}</span>
+        <span class="search-result__snippet">${escapeHtml(item.snippet)}</span>
+      </button>
+    `).join('');
+  };
+
+  const showHint = () => {
+    resultsEl.innerHTML = `
+      <p class="search-overlay__hint">
+        Try <button type="button" class="search-overlay__chip" data-query="Dyson Sphere">Dyson Sphere</button>
+        <button type="button" class="search-overlay__chip" data-query="careers">careers</button>
+        <button type="button" class="search-overlay__chip" data-query="quantum">quantum</button>
+        <button type="button" class="search-overlay__chip" data-query="publications">publications</button>
+      </p>`;
+    currentResults = [];
+    activeIndex = -1;
+  };
+
+  const runQuery = (query) => {
+    const q = query.trim().toLowerCase();
+    if (!q) { showHint(); return; }
+    const matches = INDEX.filter(item =>
+      item.title.toLowerCase().includes(q) ||
+      item.snippet.toLowerCase().includes(q) ||
+      item.cat.toLowerCase().includes(q)
+    );
+    render(matches);
+  };
+
+  const goToResult = (id) => {
+    close();
+    const target = document.getElementById(id);
+    if (!target) return;
+    const nav = document.getElementById('nav');
+    const offset = (nav ? nav.offsetHeight : 0) + 24;
+    setTimeout(() => {
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, 50);
+  };
+
+  const open = () => {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('search-open');
+    showHint();
+    input.value = '';
+    setTimeout(() => input.focus(), 50);
+  };
+
+  const close = () => {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('search-open');
+  };
+
+  trigger.addEventListener('click', () => {
+    overlay.classList.contains('is-open') ? close() : open();
+  });
+  closeBtn?.addEventListener('click', close);
+  backdrop?.addEventListener('click', close);
+
+  input.addEventListener('input', () => runQuery(input.value));
+
+  resultsEl.addEventListener('click', (e) => {
+    const chip = e.target.closest('.search-overlay__chip');
+    if (chip) { input.value = chip.dataset.query; input.focus(); runQuery(input.value); return; }
+    const result = e.target.closest('.search-result');
+    if (result) goToResult(result.dataset.target);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const isK = (e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey);
+    if (isK) { e.preventDefault(); overlay.classList.contains('is-open') ? close() : open(); return; }
+
+    if (!overlay.classList.contains('is-open')) return;
+
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key === 'ArrowDown' && currentResults.length) {
+      e.preventDefault();
+      activeIndex = (activeIndex + 1) % currentResults.length;
+      updateActive();
+    }
+    if (e.key === 'ArrowUp' && currentResults.length) {
+      e.preventDefault();
+      activeIndex = (activeIndex - 1 + currentResults.length) % currentResults.length;
+      updateActive();
+    }
+    if (e.key === 'Enter' && activeIndex > -1 && currentResults[activeIndex]) {
+      goToResult(currentResults[activeIndex].id);
+    }
+  });
+
+  function updateActive() {
+    resultsEl.querySelectorAll('.search-result').forEach((el, i) => {
+      el.classList.toggle('is-active', i === activeIndex);
+    });
+  }
 }

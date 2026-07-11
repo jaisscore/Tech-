@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 128" role="img" aria-labelledby="fsLogoTitle">
+  <title id="fsLogoTitle">FutureSwarm</title>
+  <defs>
+    <radialGradient id="fsSphere2" cx="38%" cy="34%" r="70%">
+      <stop offset="0%" stop-color="#f3e3bd"/>
+      <stop offset="55%" stop-color="#c9a35e"/>
+      <stop offset="100%" stop-color="#8a6a37"/>
+    </radialGradient>
+    <linearGradient id="fsRing2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8cf9c"/>
+      <stop offset="50%" stop-color="#c9a35e"/>
+      <stop offset="100%" stop-color="#b8703f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- mark -->
+  <g transform="translate(64,64)">
+    <ellipse cx="0" cy="0" rx="54" ry="19.5" fill="none" stroke="url(#fsRing2)" stroke-width="2.4" opacity="0.9"/>
+    <ellipse cx="0" cy="0" rx="40" ry="14.2" fill="none" stroke="url(#fsRing2)" stroke-width="1.3" opacity="0.4"/>
+    <circle cx="0" cy="0" r="23" fill="url(#fsSphere2)"/>
+    <circle cx="0" cy="0" r="23" fill="none" stroke="#3a2f1a" stroke-width="0.6" opacity="0.35"/>
+    <circle cx="52.5" cy="0" r="4.1" fill="#e8cf9c"/>
+    <circle cx="52.5" cy="0" r="7.2" fill="none" stroke="#c9a35e" stroke-width="0.8" opacity="0.5"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="152" y="76" font-family="'Space Grotesk','Helvetica Neue',Arial,sans-serif"
+        font-size="46" font-weight="600" letter-spacing="0.2" fill="#f6f2ea">FutureSwarm</text>
+</svg>

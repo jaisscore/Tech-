@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="fsMarkTitle">
+  <title id="fsMarkTitle">FutureSwarm mark</title>
+  <defs>
+    <radialGradient id="fsSphere" cx="38%" cy="34%" r="70%">
+      <stop offset="0%" stop-color="#f3e3bd"/>
+      <stop offset="55%" stop-color="#c9a35e"/>
+      <stop offset="100%" stop-color="#8a6a37"/>
+    </radialGradient>
+    <linearGradient id="fsRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8cf9c"/>
+      <stop offset="50%" stop-color="#c9a35e"/>
+      <stop offset="100%" stop-color="#b8703f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- outer orbital ring -->
+  <ellipse cx="64" cy="64" rx="54" ry="19.5" fill="none" stroke="url(#fsRing)" stroke-width="2.4" opacity="0.9"/>
+  <!-- inner orbital band, suggesting a second Dyson-sphere collector ring -->
+  <ellipse cx="64" cy="64" rx="40" ry="14.2" fill="none" stroke="url(#fsRing)" stroke-width="1.3" opacity="0.4"/>
+
+  <!-- core sphere -->
+  <circle cx="64" cy="64" r="23" fill="url(#fsSphere)"/>
+  <circle cx="64" cy="64" r="23" fill="none" stroke="#3a2f1a" stroke-width="0.6" opacity="0.35"/>
+
+  <!-- orbiting star / satellite -->
+  <circle cx="116.5" cy="64" r="4.1" fill="#e8cf9c"/>
+  <circle cx="116.5" cy="64" r="7.2" fill="none" stroke="#c9a35e" stroke-width="0.8" opacity="0.5"/>
+</svg>
