@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="fsMarkTitle fsMarkDesc">
+  <title id="fsMarkTitle">FutureSwarm</title>
+  <desc id="fsMarkDesc">A minimal ringed-sphere mark inspired by Saturn, orbital rings, and the Dyson Sphere concept.</desc>
+  <defs>
+    <linearGradient id="fsGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8cf9c"/>
+      <stop offset="55%" stop-color="#c9a35e"/>
+      <stop offset="100%" stop-color="#b8703f"/>
+    </linearGradient>
+  </defs>
+  <circle cx="20" cy="20" r="7" fill="none" stroke="url(#fsGold)" stroke-width="2"/>
+  <ellipse cx="20" cy="20" rx="17" ry="6.2" fill="none" stroke="url(#fsGold)" stroke-width="1.4" opacity="0.85"/>
+  <circle cx="36.2" cy="20" r="1.9" fill="#e8cf9c"/>
+</svg>

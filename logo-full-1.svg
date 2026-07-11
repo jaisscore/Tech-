@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" role="img" aria-labelledby="fsLogoTitle fsLogoDesc">
+  <title id="fsLogoTitle">FutureSwarm</title>
+  <desc id="fsLogoDesc">FutureSwarm full logo lockup — minimal ringed-sphere mark with wordmark, set in Sora.</desc>
+  <defs>
+    <linearGradient id="fsGoldFull" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8cf9c"/>
+      <stop offset="55%" stop-color="#c9a35e"/>
+      <stop offset="100%" stop-color="#b8703f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- mark -->
+  <g transform="translate(60,60)">
+    <circle cx="0" cy="0" r="21" fill="none" stroke="url(#fsGoldFull)" stroke-width="4.4"/>
+    <ellipse cx="0" cy="0" rx="51" ry="18.6" fill="none" stroke="url(#fsGoldFull)" stroke-width="3" opacity="0.85"/>
+    <circle cx="48.5" cy="0" r="5.2" fill="#e8cf9c"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="172" y="72" font-family="'Sora','Helvetica Neue',Arial,sans-serif"
+        font-size="42" font-weight="700" letter-spacing="0.2" fill="#f6f2ea">FutureSwarm</text>
+</svg>
